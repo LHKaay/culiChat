@@ -18,13 +18,13 @@ app = Flask(__name__)
 
 os.environ["GOOGLE_API_KEY"]  = 'AIzaSyBG7pjT2RVa0vQmpWWkvt5LqQAgotmKJb4'
 
-file_path = "documents/1.pdf"
+file_path = "documents/4.pdf"
 loader = PyPDFLoader(file_path)
 docs = loader.load()
 
 text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=1000,
-    chunk_overlap=200
+    chunk_size=2000,
+    chunk_overlap=300
 )
 doc_chunks = text_splitter.split_documents(docs)
 #Embedding document chunks and stored
@@ -64,7 +64,7 @@ graph_builder.add_edge(START, "retrieve")
 graph = graph_builder.compile()
 
 VERIFY_TOKEN = "LHKaayishandsome"
-PAGE_ACCESS_TOKEN = "EAAtVlnB73fEBO7i86nJkdyz1Q1ma7TcwTaZCICVZBsijsWdONreafKfCqkECsx2j5jDK4LI3XSMZA0UFNZBJwpsKMGuXWUtF1wJZBgmrokbfW2VULiotdsd2rBd0RhbquAZCSVTRlDnPaQL2YvRMkMMOi0nc7h8pCTmskQNChG9s5ZCWwwd5tuCMpAzeKXtP51go5ouaUG0JEsgwUI6CwZDZD"
+PAGE_ACCESS_TOKEN = "EAAHPPjR8ctABO8hc4u8vHZAT8tWPaXoxbTY7xpJEyEleNrMZBI8ZB5WZCUgbX8kubS77wP7XFdl7FzEpPUZBIpsQ2UEt81HXUoYi84DVHFjDSg7ztLzdWbRWmZA673VTkcnREjP2Pd8FHVtk0t3ogDtRjZChgxVm0QibVybmoD0ZAzOZBzdoB0qx5RDkM6YXjkhPjZAsWTGcsji88XABxLHgZDZD"
 
 @app.route('/webhook', methods=['GET'])
 def verify_webhook():
@@ -92,11 +92,11 @@ def generate_response(user_message):
     response = graph.invoke({"question": user_message})
     answer = response["answer"]
 
-    print('---------------Start Relevant document------------------')
-    for doc in response['context']:
-        print(doc.page_content)
-        print('xxxxxxxxx')
-    print('---------------End Relevant document------------------')
+    # print('---------------Start Relevant document------------------')
+    # for doc in response['context']:
+    #     print(doc.page_content)
+    #     print('xxxxxxxxx')
+    # print('---------------End Relevant document------------------')
     print(f'Culi: {answer}')
     print('#################################')
 
